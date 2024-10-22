@@ -1,0 +1,134 @@
+TREE LEVEL ORDER TRAVERSAL
+You are given the number of nodes present in the tree. You have to input the nodes and form a Binary Search Tree (BST). After forming the BST, print the Level Order traversal of the BST.
+
+Input
+Line 1 contains integer n denoting number of nodes.
+
+Line 2 contains n spaced integers denoting node values.
+
+Output
+Print a single line of space separated integers denoting Level Order traversal of tree.
+
+Constraints
+1<=n<=500
+
+-1000<=value of node<=1000
+
+Sample Input
+6
+
+1 2 5 3 4 6
+Sample Output
+1 2 5 3 6 4
+Explanation
+The BST is like :-
+     1
+      \
+       2
+        \
+         5
+        /  \
+       3    6
+        \
+         4
+We need to print the nodes level by level. We process each level from left to right.
+
+Level Order Traversal: 1 -> 2 -> 5 -> 3 -> 6 -> 4.
+Topics
+
+
+import java.util.*;
+
+class Node {
+    int val;
+    Node left, right;
+
+    Node(int val) {
+        this.val = val;
+        left = null;
+        right = null;
+    }
+}
+
+class BST {
+    Node root = null;
+
+    BST() {
+    }
+
+    Node insert(Node root, int val) {
+        if (root == null) {
+            root = new Node(val);
+            return root;
+        }
+        if (val < root.val) {
+            root.left = insert(root.left, val);
+        } else {
+            root.right = insert(root.right, val);
+        }
+        return root;
+    }
+}
+
+public class Main {
+    // public static void levelOrderTraversal(Node root) {
+    // Queue < Node > que = new ArrayDeque <>();
+    // que.add(root);
+
+    // int level = 0;
+    // while (que.size() != 0) {
+    // int size = que.size();
+
+    // System.out.print(level + ": ");
+    // while (size-->0) {
+    // Node rnode = que.remove();
+
+    // System.out.print(rnode.val + " ");
+
+    // if (rnode.left != null) {
+    // que.add(rnode.left);
+    // }
+    // if (rnode.right != null) {
+    // que.add(rnode.right);
+    // }
+    // }
+    // System.out.println();
+
+    // level++;
+    // }
+    // }
+
+    // TC: O(N), SC: O(2^H)
+    public static void levelOrderTraversal(Node root) {
+        Queue<Node> que = new ArrayDeque<>();
+        que.add(root);
+
+        while (que.size() != 0) {
+            int size = que.size();
+
+            while (size-- > 0) {
+                Node rnode = que.remove();
+
+                System.out.print(rnode.val + " ");
+
+                if (rnode.left != null) {
+                    que.add(rnode.left);
+                }
+                if (rnode.right != null) {
+                    que.add(rnode.right);
+                }
+            }
+        }
+    }
+
+    public static void main(String args[]) {
+        Scanner input = new Scanner(System.in);
+        int n = input.nextInt();
+        BST t = new BST();
+        for (int i = 0; i < n; i++) {
+            t.root = t.insert(t.root, input.nextInt());
+        }
+
+        levelOrderTraversal(t.root);
+    }
+}
